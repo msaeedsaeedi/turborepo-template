@@ -5,7 +5,45 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Root workspace dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+        patterns:
+          - "*eslint*"
+          - "*prettier*"
+          - "*test*"
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "npm(root)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    
+  # Backend project dependencies
+  - package-ecosystem: "npm"
+    directory: "/apps/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "npm(backend)"
+      include: "scope"
+    
+  # Frontend project dependencies
+  - package-ecosystem: "npm"
+    directory: "/apps/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "npm(frontend)"
+      include: "scope"
