@@ -1,5 +1,5 @@
 {
-  "name": "clevhr",
+  "name": "turborepo-template",
   "private": true,
   "version": "1.0.0",
   "workspaces": [
@@ -7,13 +7,20 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "clean": "turbo run clean",
     "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "build": "turbo run build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "lint": "turbo run lint"
+    "clean": "turbo run clean && pnpm clean:root",
+    "clean:root": "rm -rf node_modules && rm -rf .turbo",
+    "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build",
+    "docker:start": "docker-compose -f docker-compose.yml up -d",
+    "docker:stop": "docker-compose -f docker-compose.yml down",
+    "docker:prune": "docker system prune -a -f --volumes"
   },
   "devDependencies": {
+    "@angular/cli": "^19.2.12",
+    "cross-env": "^7.0.3",
     "prettier": "^3.5.3",
     "turbo": "^2.5.3"
   },
