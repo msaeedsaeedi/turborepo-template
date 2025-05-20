@@ -6,7 +6,8 @@
     "packageManager": "pnpm",
     "schematicCollections": [
       "angular-eslint"
-    ]
+    ],
+    "analytics": false
   },
   "projects": {
     "frontend": {
